@@ -18,16 +18,36 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(to top, rgba(var(--background-start-rgb), 88), rgba(80, 95, 158, 1));
+  min-height: 100svh;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.logo-text-auth::after {
+  content: 'Paillasson';
+  position: absolute;
+  top: 100%;
+  z-index: -1;
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: rgba(0, 0, 0, .5) !important;
+  transform: rotateY('90deg');
+  filter: blur(2px);
+}
+
+.logo-text-auth{
+  position: relative;
+  line-height: 1rem;
+  display: flex;
+  justify-content: center;
+  perspective: 100px;
+}
+
+.color-text{
+  color: black;
 }
