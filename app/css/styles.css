@@ -1,0 +1,111 @@
+:root{
+    background-color: rgba(80, 95, 158, 1);
+}
+
+body {
+  color: white;
+  background: linear-gradient(to top, rgba(0, 0, 0, 88), rgba(80, 95, 158, 1));
+  min-height: 100svh;
+}
+
+.active-modale{
+  max-height: 100svh;
+  overflow-y: hidden;
+}
+
+.logo-text-auth::after {
+  content: 'Paillasson';
+  position: absolute;
+  top: 100%;
+  z-index: -1;
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: rgba(0, 0, 0, .5) !important;
+  transform: rotateY('90deg');
+  filter: blur(2px);
+}
+
+.logo-text-auth{
+  position: relative;
+  line-height: 1rem;
+  display: flex;
+  justify-content: center;
+  perspective: 100px;
+}
+
+.color-text{
+  color: black;
+}
+
+input::-webkit-date-and-time-value{
+  text-align:left;
+}
+
+input[type="date"], input[type="time"]
+{
+  display: flex;
+  height: 2.5rem; 
+  min-width: 95%; 
+}
+
+.animate-invert {
+  animation: invert .15s 3 ease-in-out;
+}
+
+.appear{
+  animation: appear .15s ease-in-out forwards;
+  pointer-events: all;
+}
+
+.disappear{
+  animation: disappear .15s ease-in-out forwards;
+  pointer-events: none;
+}
+
+.loader {
+  width: 60px;
+  aspect-ratio: 2;
+  --_g: no-repeat radial-gradient(circle closest-side, rgb(32, 192, 236) 90%,#0000);
+  background: 
+    var(--_g) 0%   50%,
+    var(--_g) 50%  50%,
+    var(--_g) 100% 50%;
+  background-size: calc(100%/3) 50%;
+  animation: l3 1s infinite linear;
+}
+@keyframes l3 {
+    20%{background-position:0%   0%, 50%  50%,100%  50%}
+    40%{background-position:0% 100%, 50%   0%,100%  50%}
+    60%{background-position:0%  50%, 50% 100%,100%   0%}
+    80%{background-position:0%  50%, 50%  50%,100% 100%}
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes disappear {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes invert {
+  0% {
+    filter: brightness(100%);
+  }
+  50% {
+    filter: brightness(70%);
+  }
+  100% {
+    filter: brightness(100%);
+  }
+}

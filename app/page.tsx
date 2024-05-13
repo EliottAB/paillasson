@@ -1,8 +1,5 @@
-import Topbar from "./components/Topbar";
+import { redirect } from 'next/navigation';
 
-export default function Home() {
-  
-  return (
-    <Topbar breadcrumb="Paillasson"/>
-  );
+export default function AppRedirect() {
+  redirect('/dashboard');
 }
