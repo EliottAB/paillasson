@@ -1,11 +1,11 @@
-:root{
-    background-color: rgba(80, 95, 158, 1);
+body {
+  min-height: 100svh;
+  overflow-x: hidden;
 }
 
-body {
-  color: white;
+.background-auth{
   background: linear-gradient(to top, rgba(0, 0, 0, 88), rgba(80, 95, 158, 1));
-  min-height: 100svh;
+  color: white;
 }
 
 .active-modale{
@@ -73,6 +73,16 @@ input[type="date"], input[type="time"]
   background-size: calc(100%/3) 50%;
   animation: l3 1s infinite linear;
 }
+
+.scroll-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-hide {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+}
+
 @keyframes l3 {
     20%{background-position:0%   0%, 50%  50%,100%  50%}
     40%{background-position:0% 100%, 50%   0%,100%  50%}

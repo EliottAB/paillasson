@@ -28,6 +28,11 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# ssl certificates
+myServer.js
+dev.private.key
+dev.certificate.crt
+
 # vercel
 .vercel
 

@@ -8,9 +8,9 @@ import { Unbounded } from 'next/font/google'
 import { FcGoogle } from 'react-icons/fc'
 import { BiLogoFacebookSquare } from 'react-icons/bi'
 import { createClient } from '@supabase/supabase-js'
-import BadgeText from '../components/BadgeText'
+import BadgeText from '../components/utils/BadgeText'
 import Input from '../components/Input'
-import PopupConfirm from '../components/PopupConfirm'
+import PopupConfirm from '../components/utils/PopupConfirm'
 
 const unbounded = Unbounded({ subsets: ["latin"], weight: "400" });
 
@@ -50,6 +50,14 @@ const Authentication = () => {
     }, blinkDuration);
   }
 
+  const googleSignIn = async () => {
+    setLoadingSubmit(true);
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    })
+    if (error) displayInputError(error.message);
+    setLoadingSubmit(false);
+  }
 
   const login = async (formDatas: FormData) => {
 
@@ -86,7 +94,6 @@ const Authentication = () => {
       displayInputError(error.message);
       return;
     }
-    setLoadingSubmit(false);
     router.push("/");
   }
 
@@ -145,11 +152,10 @@ const Authentication = () => {
       setRegisterResponse('send');
     }
     setModaleShowed(true);
-    setLoadingSubmit(false);
   }
 
   return (
-    <main className={`flex flex-col justify-center gap-12 min-h-[100svh]`}>
+    <main className={`flex flex-col justify-center gap-12 min-h-[100svh] background-auth`}>
       { registerResponse == 'send' &&
         <PopupConfirm showed={modaleShowed} setShowed={(value) => setModaleShowed(value)} title='Vérification envoyée' imgPath='/assets/share.gif' text="Un lien de vérification a été envoyé sur votre adresse mail, veuillez l'ouvrir pour continuer." buttonText='Ok' buttonFunction={() => router.push('/authentication/login')}/>
       }
@@ -205,7 +211,7 @@ const Authentication = () => {
 
       <div className='flex w-[100%] gap-5 pb-4'>
         <button type="button" className='flex justify-center w-full rounded-lg border-gray-bg-gray-50 p-2 text-sm shadow-sm bg-gray-50'><BiLogoFacebookSquare className='text-blue-900'/></button>
-        <button type="button" className='flex justify-center w-full rounded-lg border-gray-bg-gray-50 p-2 text-sm shadow-sm bg-gray-50'><FcGoogle/></button>
+        <button type="button" onClick={googleSignIn} className='flex justify-center w-full rounded-lg border-gray-bg-gray-50 p-2 text-sm shadow-sm bg-gray-50'><FcGoogle/></button>
       </div>
 
       <p className={`text-sm flex items-center justify-center text-${loadingRegister ? 'gray-500' : 'gray-400'}`}>

@@ -3,7 +3,10 @@
 import { createClient } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react"
+import { create } from 'zustand'
 import Loader from "../components/Loader";
+import Topbar from "../components/Topbar";
+import BottomNav from "../components/BottomNav";
 
 const Dashboard = ({children}: {children: React.ReactNode}) => {
 
@@ -22,15 +25,34 @@ const Dashboard = ({children}: {children: React.ReactNode}) => {
       return;
     }
     setUserSession(session);
+
+    interface store {
+      user: {email: string | undefined, firstname: string | undefined, lastname: string | undefined},
+    }    
+
+    const useStore = create<store>((set) => ({
+      user: {
+        email: session.user.email,
+        firstname: session.user.user_metadata.firstname,
+        lastname: session.user.user_metadata.lastname,
+      },
+    }))
   }, [router]);
   
   useEffect(() =>{
-    getSessionUser();
+    // getSessionUser();
   }, [getSessionUser, router])
 
   return (
     <>
-    {userSession ? children : <Loader/>}
+    {/* {userSession ? */}
+    {true ?
+    <>
+      {children} 
+      <BottomNav/>
+    </>
+    : <Loader/>
+    }
     </>
   )
 }
