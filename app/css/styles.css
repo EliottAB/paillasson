@@ -83,6 +83,48 @@ input[type="date"], input[type="time"]
   scrollbar-width: none;
 }
 
+.main-header + main {
+  padding-top: 3.8rem;
+}
+
+.take-full-height-with-header{
+  min-height: calc(100vh - 10rem);
+}
+
+/* .Toastify__toast-container{
+}  */
+
+.Toastify__toast-container--top-center{
+  width: 100vw !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1rem !important;
+  gap: 1rem;
+}
+
+.Toastify__toast{
+  box-shadow: 0 0 .6rem rgba(0, 0, 0, .12) !important;
+  min-width: 18rem !important;
+  width: 20vw;
+  margin: auto !important;
+  margin-bottom: 1rem;
+  border-radius: .4rem !important;
+}
+
+.privacy-choice:has(input:checked) {
+  background-color: rgb(59 130 246 / var(--tw-text-opacity));
+  color: white;
+}
+
+.privacy-choice:not(:has(input:checked)) .icon-border {
+  display: none;
+}
+
+.icon-border{
+  filter: drop-shadow(0 0 1.5px rgb(0, 0, 0));
+}
+
 @keyframes l3 {
     20%{background-position:0%   0%, 50%  50%,100%  50%}
     40%{background-position:0% 100%, 50%   0%,100%  50%}

@@ -1,6 +1,6 @@
 import Topbar from "@/app/components/Topbar"
 
-const page = () => {
+const Entraides = () => {
   return (
     <>
       <Topbar breadcrumb="Entraides"/>
@@ -10,4 +10,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Entraides

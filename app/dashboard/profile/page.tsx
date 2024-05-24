@@ -1,6 +1,6 @@
 import Topbar from "@/app/components/Topbar"
 
-const page = () => {
+const Profile = () => {
   return (
     <>
       <Topbar breadcrumb="Profile"/>
@@ -10,4 +10,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Profile

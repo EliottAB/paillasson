@@ -8,6 +8,8 @@ import { usePathname } from "next/navigation";
 const BottomNav = () => {
 
   const pathName = usePathname();
+  const pathArray = pathName.split("/");
+  if (pathArray.length > 3) return;
 
   const actualPathColor = (path: string) => {
     if (pathName === path) return 'text-black';

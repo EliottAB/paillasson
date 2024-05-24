@@ -21,7 +21,6 @@ const Home = () => {
   }
 
   const getVoisinageAction = (voisinage: Voisinage) => {
-    //TODO ajouter la vérification si user y est ou non
     if(voisinage.joined) return {style: 'text-white bg-blue-500', text: 'Aller'};
     if(voisinage.requested) return {style: 'text-gray-400 bg-gray-100 border-2', text: 'Demandé'};
     if(voisinage.privacy === "public") return {style: 'text-white bg-green-500', text: 'Rejoindre'};
