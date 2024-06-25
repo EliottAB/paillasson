@@ -43,7 +43,7 @@ const Home = () => {
                 voisinages.map((voisinage, index) => {
                   return (
                     <li key={index} className="relative flex flex-col justify-between items-center border-2 rounded-md shadow-lg h-[8rem] min-w-[12rem]">
-                      <Image className="rounded-full absolute bottom-[75%] bg-white shadow-sm shadow-gray-700" src={voisinage.photo} alt="Photo de profile du voisinage" width={75} height={75} />
+                      <Image className="rounded-full absolute bottom-[75%] bg-white shadow-sm shadow-gray-700 h-16 w-16 object-cover" src={voisinage.photo} alt="Photo de profile du voisinage" width={75} height={75} />
                       <h3 className="font-bold mt-10">{voisinage.name}</h3>
                       <p className="text-[.7rem] font-light text-gray-400 -mt-3">{voisinage.description}</p>
                       <button className={`inline-block rounded-lg px-5 py-1 text-sm font-medium mb-3 ${getVoisinageAction(voisinage)?.style}`}>{getVoisinageAction(voisinage)?.text}</button>

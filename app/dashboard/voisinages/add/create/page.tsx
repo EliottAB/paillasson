@@ -10,10 +10,16 @@ import { IoIosLock, IoIosMail  } from "react-icons/io";
 import { TbWorld } from "react-icons/tb";
 import { TbTriangleInvertedFilled } from "react-icons/tb";
 import Link from "next/link";
+import PopupConfirm from "@/app/components/utils/PopupConfirm";
+import dynamic from 'next/dynamic'; // Composant LeafletMap chargé dynamiquement 
+const Map = dynamic( () => import('@/app/components/utils/Map'), { ssr: false } );
+
+
 const CreateVoisinage = () => {
 
   const [profilePic, setProfilePic] = useState<File | null>(null)
   const [infoPrivacy, setInfoPrivacy] = useState<string>("demande")
+  const [showedPosition, setShowedPosition] = useState<boolean>(false)
 
   const sendCreate = (formDatas: FormData) => {
 
@@ -63,8 +69,14 @@ const CreateVoisinage = () => {
       <Topbar breadcrumb="Créer un voisinage" backLink="/dashboard/voisinages/add"/>
       <main>
 
+        <PopupConfirm title="Position du voisinage" buttonText="Créer" cancelButtonText="Annuler" showed={showedPosition} setShowed={setShowedPosition} buttonFunction={() => setShowedPosition(false)}>          
+          <div className="w-full h-[300px] overflow-hidden mt-3">
+            <Map needGeoLocation={true}/>
+          </div>
+        </PopupConfirm>
+
         <form action={(datas) => sendCreate(datas)} className="flex flex-col items-center justify-between take-full-height-with-header">
-          <div className="flex flex-col items-center justify-between">
+          <div className="flex flex-col items-center justify-between max-w-[30em]">
             <label htmlFor="pfp" className="relative mt-8">
               <Image src={profilePic ? URL.createObjectURL(profilePic) : "/assets/voisinage.jpg"} alt="Photo du voisinage" height={200} width={200} className="rounded-full shadow-md border-2 border-gray-300 h-[9rem] w-[9rem] object-cover"/>
               <div className="absolute bottom-1 right-0 bg-blue-500 rounded-full p-2 border-2 border-gray-200 shadow-inner">
@@ -105,7 +117,7 @@ const CreateVoisinage = () => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-2 mt-6 pe-8 ps-12 text-sm">
+            <div className="flex flex-col gap-2 mt-6 pe-8 ps-12 text-sm max-w-full">
               { infoPrivacy === "public" &&
               <p><span className="font-bold me-1 py-2"><TbWorld className="inline-block relative -top-[2px]"/>Ouvert: </span>
                 <br/>
@@ -136,7 +148,7 @@ const CreateVoisinage = () => {
 
           <div className="flex gap-4 -mb-4 mt-10">
             <Link className="w-[42vw] py-2 text-gray-500 font-bold rounded-lg text-center" href="/dashboard/voisinages/add">Annuler</Link>
-            <button className="w-[42vw] bg-blue-500 text-white font-bold rounded-lg">Créer</button>
+            <button className="w-[42vw] bg-blue-500 text-white font-bold rounded-lg" onClick={() => setShowedPosition(true)}>Suivant</button>
           </div>
         </form>
       </main>
