@@ -121,6 +121,12 @@ input[type="date"], input[type="time"]
   display: none;
 }
 
+.entraide-radio:has(input:checked) {
+  opacity: 1 !important;
+  filter: grayscale(0) !important;
+  box-shadow: 3px 3px 8px rgba(80, 80, 80, 0.4) !important;
+}
+
 .icon-border{
   filter: drop-shadow(0 0 1.5px rgb(0, 0, 0));
 }
