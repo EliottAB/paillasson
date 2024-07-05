@@ -8,16 +8,16 @@ import Loader from "../components/Loader";
 import Topbar from "../components/Topbar";
 import BottomNav from "../components/BottomNav";
 
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY ?? '';
+export const supabase = createClient(supabaseUrl, supabaseKey);
+
 const Dashboard = ({children}: {children: React.ReactNode}) => {
 
   const router = useRouter();
   const [userSession, setUserSession] = useState<null | object>(null);
 
   const getSessionUser = useCallback(async () => {
-
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY ?? '';
-    const supabase = createClient(supabaseUrl, supabaseKey);
     
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
@@ -25,6 +25,10 @@ const Dashboard = ({children}: {children: React.ReactNode}) => {
       return;
     }
     setUserSession(session);
+
+    // const userDatas = await supabase.from("f_users").select("firstname, lastname, premium, tag")
+    // const {data, error} = await supabase.from("f_voisinage").insert({name: 'sooooooperrrrr', confidentiality: 'private'})
+    // console.log(data, error)
 
     interface store {
       user: {email: string | undefined, firstname: string | undefined, lastname: string | undefined},
@@ -40,13 +44,13 @@ const Dashboard = ({children}: {children: React.ReactNode}) => {
   }, [router]);
   
   useEffect(() =>{
-    // getSessionUser();
+    getSessionUser();
   }, [getSessionUser, router])
 
   return (
     <>
     {/* {userSession ? */}
-    {true ?
+    {userSession ?
     <>
       {children} 
       <BottomNav/>

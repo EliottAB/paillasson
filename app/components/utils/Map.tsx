@@ -1,4 +1,4 @@
-import React, { Dispatch, useEffect, useState } from 'react';
+import React, { Dispatch, useCallback, useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, Circle } from 'react-leaflet';
 import L, { LatLngTuple } from 'leaflet';
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -31,18 +31,17 @@ function DraggableMarker({position, setPosition}: {position: LatLngTuple, setPos
   );
 }
 
-function Map({needGeoLocation=false}: {needGeoLocation: boolean}) {
+function Map({needGeoLocation=false, position, setPosition}: {needGeoLocation: boolean, position: LatLngTuple, setPosition: Dispatch<LatLngTuple>}) {
   
-  const [position, setPosition] = useState<LatLngTuple>([0, 0]);
   const [isPositionSet, setIsPositionSet] = useState(false);
   const [loadingAskPos, setLoadingAskPos] = useState(true);
 
-  const giveLocation = (position: GeolocationPosition) => {
+  const giveLocation = useCallback((position: GeolocationPosition) => {
     setPosition([position.coords.latitude, position.coords.longitude]);
     setIsPositionSet(true);
     setLoadingAskPos(false);
-  }
-
+  }, [setPosition, setIsPositionSet, setLoadingAskPos]);
+  
   const dontGiveLocation = ()=> {
     setLoadingAskPos(false);
   }
@@ -58,7 +57,7 @@ function Map({needGeoLocation=false}: {needGeoLocation: boolean}) {
       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
       tileLayer: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     });
-  }, []);
+  }, [giveLocation]);
 
   if (needGeoLocation && !isPositionSet) {
     return (

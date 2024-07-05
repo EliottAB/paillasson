@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { useEffect, useState } from "react"
+import LittleLoader from "./LittleLoader";
 
 const PopupConfirm = ({title, text, imgPath, children, buttonText, cancelButtonText, cancelButtonFunction, buttonFunction, showed, setShowed}:
   {title: string, text?: string, imgPath?: string, children?: React.ReactNode, buttonText: string, buttonFunction: () => void, cancelButtonText?: string, cancelButtonFunction?: () => void, showed: boolean, setShowed: (value: boolean) => void}
@@ -7,15 +8,22 @@ const PopupConfirm = ({title, text, imgPath, children, buttonText, cancelButtonT
   
   const [hide, setHide] = useState(false);
   const [firstAppear, setFirstAppear] = useState(true);
+  const [loadingFunction, setLoadingFunction] = useState(false);
 
   useEffect(() => {
     document.body.classList.add('active-modale');
   })
 
-  const closePopUp = (cancel=false) => {
+  const closePopUp = async (cancel=false) => {
+    if(loadingFunction) return;
+    if(!cancel) {
+      setLoadingFunction(true);
+      const result = await buttonFunction() as any;
+      setLoadingFunction(false);
+      if(result == 'error') return;
+    }
     setHide(false);
     setShowed(false);
-    if(!cancel) buttonFunction();
     setTimeout(() => {
       setHide(true);
     }, 300);
@@ -33,8 +41,10 @@ const PopupConfirm = ({title, text, imgPath, children, buttonText, cancelButtonT
           {text && <p className="text-black mt-3 text-center" dangerouslySetInnerHTML={{ __html: text.replace(/\./g, ".<br/>") }} />}
         </div>
         <div className="flex justify-center gap-3 w-full">
-          <button className=" inline-block rounded-lg  px-5 py-3 text-sm font-medium text-gray-500 w-[100%] max-w-[12rem]" onClick={() => closePopUp(true)}>{cancelButtonText}</button>
-          <button className=" inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white w-[100%] max-w-[12rem]" onClick={() => closePopUp()}>{buttonText}</button>
+          <button className="inline-block rounded-lg  px-5 py-3 text-sm font-medium text-gray-500 w-[100%] max-w-[12rem]" onClick={() => closePopUp(true)}>{cancelButtonText}</button>
+          <button className={`relative justify-center flex rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white w-[100%] max-w-[12rem] ${loadingFunction && 'bg-opacity-70 text-opacity-70'}'}`} onClick={() => closePopUp()}>{buttonText}
+            {loadingFunction && <LittleLoader/>}
+          </button>
         </div>
       </div>
     </div>

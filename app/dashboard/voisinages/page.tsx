@@ -70,22 +70,27 @@ const Voisinages = () => {
           )}
         </ul>
         
-        <h2 className="ps-5 mt-5 mb-3 font-bold text-xl">Suggestions</h2>
+        {
+          nearVoisinages.length > 0 &&
+          <>
+          <h2 className="ps-5 mt-5 mb-3 font-bold text-xl">Suggestions</h2>
 
-        <ul className="w-full">
-          {
-            nearVoisinages.map((voisinage, index) => (
-              <li key={index} className={`flex items-center gap-3 mx-6 py-3 ${index === nearVoisinages.length - 1 ? '' : 'border-b'}`}>
-                <Image src={voisinage.photo} alt="Image de l'activité" width={50} height={50} className="rounded-full h-12 w-12"/>
-                <div className="flex flex-col">
-                  <h3 className="font-bold">{voisinage.name}</h3>
-                  <p className="text-gray-400 text-xs font-light leading-3">{voisinage.description}</p>
-                </div>
-                <button className={`absolute right-5 rounded-lg w-24 py-1 text-sm font-medium ${getVoisinageAction(voisinage)?.style}`}>{getVoisinageAction(voisinage)?.text}</button>
-              </li>
-            ))
-          }
-        </ul>
+          <ul className="w-full">
+            {
+              nearVoisinages.map((voisinage, index) => (
+                <li key={index} className={`flex items-center gap-3 mx-6 py-3 ${index === nearVoisinages.length - 1 ? '' : 'border-b'}`}>
+                  <Image src={voisinage.photo} alt="Image de l'activité" width={50} height={50} className="rounded-full h-12 w-12"/>
+                  <div className="flex flex-col">
+                    <h3 className="font-bold">{voisinage.name}</h3>
+                    <p className="text-gray-400 text-xs font-light leading-3">{voisinage.description}</p>
+                  </div>
+                  <button className={`absolute right-5 rounded-lg w-24 py-1 text-sm font-medium ${getVoisinageAction(voisinage)?.style}`}>{getVoisinageAction(voisinage)?.text}</button>
+                </li>
+              ))
+            }
+          </ul>
+          </>
+        }
       </main>
     </>
   )
